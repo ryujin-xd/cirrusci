@@ -1,0 +1,25 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: /tmp/cirrus-ci-build
+    TG_TOKEN: ""
+    TG_CHAT_ID: ""
+    IMAGE: ""
+    
+task:
+  name: "Kernel deploy.."
+  timeout_in: 2h
+  container:
+      image: ryujinxd/ubuntu:latest
+      cpu: 8
+      memory: 32G
+
+  Environment_script:
+      - cat /etc/os*
+      - env
+      - git config --global user.email "ryujinxd6@gmail.com" -y && git config --global user.name "ryujin-xd" -y
+
+  Sync_script:
+      - ./download.sh
+
+  Compile_script:
+      - ./compile.sh
