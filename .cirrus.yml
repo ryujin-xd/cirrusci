@@ -22,4 +22,4 @@ task:
       - ./download.sh
 
   Compile_script:
-      - ./compile.sh
+      - ./compile.sh 
