@@ -1,25 +1,35 @@
-env:
-    CIRRUS_CLONE_DEPTH: 1
-    CIRRUS_WORKING_DIR: /tmp/cirrus-ci-build
+env: 
+#  ENCRYPTED
+    USER_NAME: ""
+    USER_EMAIL: ""
+    BUILD_USER: ""
+    BUILD_HOST: ""
     TG_TOKEN: ""
     TG_CHAT_ID: ""
-    IMAGE: ""
+    GH_TOKEN: ""
     
+#  CIRRUS CONFIG
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: /tmp/cirrus-ci-build
+       
 task:
-  name: "Kernel deploy.."
+  name: "Kernel deploy..."
   timeout_in: 2h
   container:
-      image: ryujinxd/ubuntu:latest
+      image: aarunalr/aosp-build
       cpu: 8
       memory: 32G
 
   Environment_script:
+      - export DEBIAN_FRONTEND=noninteractive
       - cat /etc/os*
       - env
-      - git config --global user.email "ryujinxd6@gmail.com" -y && git config --global user.name "ryujin-xd" -y
+      - git config --global user.name "$USER_NAME"
+      - git config --global user.email "$USER_EMAIL"
+      - export TZ=Asia/Jakarta
 
   Sync_script:
-      - ./download.sh
+      - ./sync.sh
 
-  Compile_script:
-      - ./compile.sh 
+  Compile_Proton_script:
+      - ./proton-compile.sh
